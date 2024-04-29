@@ -21,7 +21,28 @@ class RideDetailApiView(generics.RetrieveAPIView):
 
 class RideRequestApiView(generics.UpdateAPIView):
     """
-        Request a ride
+    View for requesting a ride.
+
+    Methods:
+    - PATCH : Accepts ride request data which will have rider and status of ride as "REQUESTED".
+              This view require jwt authentication
+
+    Serializer Used:
+    - RideSerializer
+
+    Example Usage:
+    ```
+    PATCH /request_ride/<int:id>/
+    {
+        "status":"REQUESTED",
+        "rider":4
+    }
+    ```
+
+    Response (Success):
+    ```
+    HTTP 200 ok
+    ```
     """
     lookup_field = 'id'
     queryset = Rides.objects.all()
@@ -29,7 +50,28 @@ class RideRequestApiView(generics.UpdateAPIView):
 
 class UpdateRideStatusApiView(generics.UpdateAPIView):
     """
-     Update status of a ride
+    View for updating status of a ride.
+
+    Methods:
+    - PATCH : Accepts ride request data which will have any of the status
+              ["NOT_AVAILABLE", "STARTED", "COMPLETED", "CANCELLED", "AVAILABLE"]
+              This view require jwt authentication
+
+    Serializer Used:
+    - RideSerializer
+
+    Example Usage:
+    ```
+    PATCH /update_ride_status/<int:id>/
+    {
+        "status":"STARTED"
+    }
+    ```
+
+    Response (Success):
+    ```
+    HTTP 200 ok
+    ```
     """
     lookup_field = 'id'
     queryset = Rides.objects.all()
