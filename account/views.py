@@ -20,8 +20,10 @@ class LoginUser(APIView):
             )  # for authenticated user jwt token is created
             # refresh_token = str(token)
             access_token = str(token.access_token)
+            user_name = user.username
+            user_id = user.id
             return Response(
-                {"access_token": access_token}, status=status.HTTP_201_CREATED
+                {"user_id": user_id, "user_name": user_name, "access_token": access_token}, status=status.HTTP_201_CREATED
             )
         return Response(
             {"message": "User authentication failed"},

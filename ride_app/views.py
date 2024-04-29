@@ -1,3 +1,40 @@
-from django.shortcuts import render
+from rest_framework.views import APIView
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+from rest_framework import status, generics
+from .models import Rides
+from .serializers import RideSerializer
 
-# Create your views here.
+
+class RideListApiView(generics.ListAPIView):
+    """
+    Api that gets all the available rides list.
+    """
+    queryset = Rides.objects.filter(status=Rides.Ride_Status.AVAILABLE)
+    serializer_class = RideSerializer
+
+
+class RideDetailApiView(generics.RetrieveAPIView):
+    """
+    Get ride details
+    """
+    lookup_field = 'id'
+    queryset = Rides.objects.all()
+    serializer_class = RideSerializer
+
+class RideRequestApiView(generics.UpdateAPIView):
+    """
+        Request a ride
+    """
+    lookup_field = 'id'
+    queryset = Rides.objects.all()
+    serializer_class = RideSerializer
+
+class UpdateRideStatusApiView(generics.UpdateAPIView):
+    """
+     Update status of a ride
+    """
+    lookup_field = 'id'
+    queryset = Rides.objects.all()
+    serializer_class = RideSerializer
+
